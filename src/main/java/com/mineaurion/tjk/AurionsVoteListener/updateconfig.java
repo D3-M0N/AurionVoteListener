@@ -38,8 +38,7 @@ public class updateconfig {
 			e.printStackTrace();
 		}
 
-		Paths.get(defaultConfig + "/aurionsvotelistener.conf").toFile()
-				.renameTo(Paths.get(defaultConfig + "/aurionsvotelistener.old").toFile());
+		Paths.get(defaultConfig + "/aurionsvotelistener.conf").toFile().renameTo(Paths.get(defaultConfig + "/aurionsvotelistener.old").toFile());
 
 	}
 
@@ -107,19 +106,18 @@ public class updateconfig {
 				copyafter = false;
 			}
 		}
-		
+
 		out.close();
 		in.close();
-		
+
 		File old1 = Paths.get(defaultConfig + "/aurionsvotelistener.conf").toFile();
 		FileInputStream fis1 = new FileInputStream(old1);
 		BufferedReader in1 = new BufferedReader(new InputStreamReader(fis1));
-		
+
 		File outF1 = new File(defaultConfig + "/Reward.conf");
 		FileWriter fstream1 = new FileWriter(outF1, true);
 		BufferedWriter out1 = new BufferedWriter(fstream1);
-		
-		
+
 		int count = 0;
 		while ((aLine = in1.readLine()) != null) {
 			if (aLine.startsWith("services"))
@@ -147,16 +145,15 @@ public class updateconfig {
 
 		out1.close();
 		in1.close();
-		
+
 		File old2 = Paths.get(defaultConfig + "/aurionsvotelistener.conf").toFile();
 		FileInputStream fis2 = new FileInputStream(old2);
 		BufferedReader in2 = new BufferedReader(new InputStreamReader(fis2));
-		
+
 		File outF2 = new File(defaultConfig + "/AdvancedReward.conf");
 		FileWriter fstream2 = new FileWriter(outF2, true);
 		BufferedWriter out2 = new BufferedWriter(fstream2);
-		
-		
+
 		count = 0;
 		while ((aLine = in2.readLine()) != null) {
 			if (aLine.startsWith("ExtraReward") || aLine.startsWith("cumulativevoting"))
@@ -181,7 +178,7 @@ public class updateconfig {
 				copyafter = false;
 			}
 		}
-		
+
 		out2.write("perms{");
 		out2.newLine();
 		out2.write("\"Aurions.example\"=[");
@@ -192,14 +189,14 @@ public class updateconfig {
 		out2.newLine();
 		out2.write("}");
 		out2.newLine();
-		
+
 		out2.close();
 		in2.close();
-		
+
 		AurionsVoteListener.GetInstance().settingNode = AurionsVoteListener.settingLoader.load();
 		AurionsVoteListener.GetInstance().rewardNode = AurionsVoteListener.rewardLoader.load();
 		AurionsVoteListener.GetInstance().adrewardNode = AurionsVoteListener.adrewardLoader.load();
-		
+
 		AurionsVoteListener.GetInstance().getSetting().getNode("Version").setValue(9);
 		AurionsVoteListener.GetInstance().saveConfig();
 

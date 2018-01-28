@@ -13,22 +13,20 @@ public class CleartotalsCmd implements CommandExecutor {
 
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-		if (src.hasPermission("*") || src.hasPermission("listener.admin"))
-		{
-		Boolean clear = SwitchSQL.Cleartotals();
-		if(clear){
-			src.sendMessage(Text.of("Cleared successful"));
-			return CommandResult.success();
-		}
-		else{
-			src.sendMessage(Text.of("Cleared fail"));
+		if (src.hasPermission("*") || src.hasPermission("listener.admin")) {
+			Boolean clear = SwitchSQL.Cleartotals();
+			if (clear) {
+				src.sendMessage(Text.of("Cleared successful"));
+				return CommandResult.success();
+			} else {
+				src.sendMessage(Text.of("Cleared fail"));
+				return CommandResult.empty();
+			}
+		} else {
+			src.sendMessage(Text.of("You don't have permission"));
 			return CommandResult.empty();
 		}
-		}else{
-			src.sendMessage(Text.of("You don't have permission"));
-		return CommandResult.empty();
-		}
-		
+
 	}
 
 }

@@ -26,38 +26,29 @@ public class RewardsTask {
 
 		if (succes) {
 			if (!AurionsVoteListener.GetInstance().getReward().getNode("services", service).isVirtual()) {
-				Reward = AurionsVoteListener.GetInstance().getReward().getNode("services", service, "commands")
-						.getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList());
-				Broadcast = AurionsVoteListener.GetInstance().getReward().getNode("services", service, "broadcast")
-						.getString();
-				playermessage = AurionsVoteListener.GetInstance().getReward()
-						.getNode("services", service, "playermessage").getString();
+				Reward = AurionsVoteListener.GetInstance().getReward().getNode("services", service, "commands").getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList());
+				Broadcast = AurionsVoteListener.GetInstance().getReward().getNode("services", service, "broadcast").getString();
+				playermessage = AurionsVoteListener.GetInstance().getReward().getNode("services", service, "playermessage").getString();
 			} else {
 				try {
-					Reward = AurionsVoteListener.GetInstance().getReward().getNode("services", "DEFAULT", "commands")
-							.getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList());
-					Broadcast = AurionsVoteListener.GetInstance().getReward().getNode("services", "DEFAULT", "broadcast")
-							.getString();
-					playermessage = AurionsVoteListener.GetInstance().getReward()
-							.getNode("services", "DEFAULT", "playermessage").getString();
+					Reward = AurionsVoteListener.GetInstance().getReward().getNode("services", "DEFAULT", "commands").getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList());
+					Broadcast = AurionsVoteListener.GetInstance().getReward().getNode("services", "DEFAULT", "broadcast").getString();
+					playermessage = AurionsVoteListener.GetInstance().getReward().getNode("services", "DEFAULT", "playermessage").getString();
 				} catch (Exception e) {
 					target.get().sendMessage(Text.of("The default service has been deleted"));
 				}
 			}
-			
-			for(String perm : Permission) {
-				if(target.get().hasPermission(perm)) {
-					Reward.addAll(AurionsVoteListener.GetInstance().getAdReward().getNode("perms",perm).getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList()));
+
+			for (String perm : Permission) {
+				if (target.get().hasPermission(perm)) {
+					Reward.addAll(AurionsVoteListener.GetInstance().getAdReward().getNode("perms", perm).getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList()));
 				}
 			}
 
 			final List<String> Rewardtask = Reward;
 			for (int i = 0; i < Rewardtask.size(); i++) {
 				final int y = i;
-				Sponge.getScheduler().createTaskBuilder()
-						.execute(() -> Sponge.getCommandManager().process(
-								Sponge.getServer().getConsole().getCommandSource().get(),
-								Rewardtask.get(y).replace("<username>", player)))
+				Sponge.getScheduler().createTaskBuilder().execute(() -> Sponge.getCommandManager().process(Sponge.getServer().getConsole().getCommandSource().get(), Rewardtask.get(y).replace("<username>", player)))
 						.submit(AurionsVoteListener.GetInstance());
 			}
 
@@ -67,8 +58,7 @@ public class RewardsTask {
 			}
 
 			if (!playermessage.isEmpty()) {
-				target.get().sendMessage(
-						Text.of(AurionsVoteListener.GetInstance().formatmessage(playermessage, service, player)));
+				target.get().sendMessage(Text.of(AurionsVoteListener.GetInstance().formatmessage(playermessage, service, player)));
 			}
 
 			if (AurionsVoteListener.AddExtraRandom) {
@@ -94,12 +84,10 @@ public class RewardsTask {
 
 		if (succes) {
 			if (!AurionsVoteListener.GetInstance().getReward().getNode("services", service).isVirtual()) {
-				Reward = AurionsVoteListener.GetInstance().getReward().getNode("services", service, "commands")
-						.getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList());
+				Reward = AurionsVoteListener.GetInstance().getReward().getNode("services", service, "commands").getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList());
 			} else {
 				try {
-					Reward = AurionsVoteListener.GetInstance().getReward().getNode("services", "DEFAULT", "commands")
-							.getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList());
+					Reward = AurionsVoteListener.GetInstance().getReward().getNode("services", "DEFAULT", "commands").getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList());
 				} catch (Exception e) {
 					target.get().sendMessage(Text.of("The default service has been deleted"));
 					return;
@@ -109,10 +97,7 @@ public class RewardsTask {
 			final List<String> Rewardtask = Reward;
 			for (int i = 0; i < Rewardtask.size(); i++) {
 				final int y = i;
-				Sponge.getScheduler().createTaskBuilder()
-						.execute(() -> Sponge.getCommandManager().process(
-								Sponge.getServer().getConsole().getCommandSource().get(),
-								Rewardtask.get(y).replace("<username>", player)))
+				Sponge.getScheduler().createTaskBuilder().execute(() -> Sponge.getCommandManager().process(Sponge.getServer().getConsole().getCommandSource().get(), Rewardtask.get(y).replace("<username>", player)))
 						.submit(AurionsVoteListener.GetInstance());
 			}
 
@@ -139,16 +124,12 @@ public class RewardsTask {
 
 		if (succes) {
 			if (!AurionsVoteListener.GetInstance().getReward().getNode("services", service).isVirtual()) {
-				Reward = AurionsVoteListener.GetInstance().getReward().getNode("services", service, "commands")
-						.getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList());
-				Broadcast = AurionsVoteListener.GetInstance().getReward().getNode("services", service, "broadcast")
-						.getString();
+				Reward = AurionsVoteListener.GetInstance().getReward().getNode("services", service, "commands").getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList());
+				Broadcast = AurionsVoteListener.GetInstance().getReward().getNode("services", service, "broadcast").getString();
 			} else {
 				try {
-					Reward = AurionsVoteListener.GetInstance().getReward().getNode("services", "DEFAULT", "commands")
-							.getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList());
-					Broadcast = AurionsVoteListener.GetInstance().getReward().getNode("services", "DEFAULT", "broadcast")
-							.getString();
+					Reward = AurionsVoteListener.GetInstance().getReward().getNode("services", "DEFAULT", "commands").getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList());
+					Broadcast = AurionsVoteListener.GetInstance().getReward().getNode("services", "DEFAULT", "broadcast").getString();
 				} catch (Exception e) {
 					Sponge.getServer().getConsole().sendMessage(Text.of("The default service has been deleted"));
 				}
@@ -157,10 +138,7 @@ public class RewardsTask {
 			final List<String> Rewardtask = Reward;
 			for (int i = 0; i < Rewardtask.size(); i++) {
 				final int y = i;
-				Sponge.getScheduler().createTaskBuilder()
-						.execute(() -> Sponge.getCommandManager().process(
-								Sponge.getServer().getConsole().getCommandSource().get(),
-								Rewardtask.get(y).replace("<username>", player)))
+				Sponge.getScheduler().createTaskBuilder().execute(() -> Sponge.getCommandManager().process(Sponge.getServer().getConsole().getCommandSource().get(), Rewardtask.get(y).replace("<username>", player)))
 						.submit(AurionsVoteListener.GetInstance());
 			}
 
@@ -192,10 +170,9 @@ public class RewardsTask {
 		String Broadcast;
 		String playermessage;
 		boolean lucky = false;
-		
+
 		Optional<Player> target1 = Sponge.getServer().getPlayer(player);
-		target1.get().sendMessage(
-				Text.of(String.valueOf(extraramdom.size())));
+		target1.get().sendMessage(Text.of(String.valueOf(extraramdom.size())));
 		for (int i = 0; i <= extraramdom.size(); i++) {
 
 			if (i == 0) {
@@ -215,24 +192,19 @@ public class RewardsTask {
 				if (chance >= Value1 && Value1 != 0.0f) {
 					lucky = true;
 				}
-			} else if (chance >= Value1 && chance < Value2 && Value1 != 0.0f || chance == Value1 ) {
+			} else if (chance >= Value1 && chance < Value2 && Value1 != 0.0f || chance == Value1) {
 				lucky = true;
 			}
 
 			if (lucky) {
 				String random = String.valueOf(100 - extraramdom.get(i - 1));
-				Reward = AurionsVoteListener.GetInstance().getReward().getNode("ExtraReward", random, "commands")
-						.getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList());
-				Broadcast = AurionsVoteListener.GetInstance().getReward().getNode("ExtraReward", random, "broadcast")
-						.getString();
-				playermessage = AurionsVoteListener.GetInstance().getReward()
-						.getNode("ExtraReward", random, "playermessage").getString();
+				Reward = AurionsVoteListener.GetInstance().getReward().getNode("ExtraReward", random, "commands").getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList());
+				Broadcast = AurionsVoteListener.GetInstance().getReward().getNode("ExtraReward", random, "broadcast").getString();
+				playermessage = AurionsVoteListener.GetInstance().getReward().getNode("ExtraReward", random, "playermessage").getString();
 
 				for (int x = 0; x < Reward.size(); x++) {
-					Sponge.getCommandManager().process(Sponge.getServer().getConsole(),
-							Reward.get(x).replace("<username>", player));
+					Sponge.getCommandManager().process(Sponge.getServer().getConsole(), Reward.get(x).replace("<username>", player));
 				}
-
 
 				if (!Broadcast.isEmpty()) {
 					MessageChannel messageChannel = MessageChannel.TO_PLAYERS;
@@ -241,12 +213,9 @@ public class RewardsTask {
 
 				if (!playermessage.isEmpty()) {
 					Optional<Player> target = Sponge.getServer().getPlayer(player);
-					target.get().sendMessage(
-							Text.of(AurionsVoteListener.GetInstance().formatmessage(playermessage, "", player)));
+					target.get().sendMessage(Text.of(AurionsVoteListener.GetInstance().formatmessage(playermessage, "", player)));
 				}
-				
-			
-				
+
 				lucky = false;
 			}
 
@@ -261,20 +230,15 @@ public class RewardsTask {
 		String playermessage;
 		if (cumulativreward.contains(vote)) {
 
-			Reward = AurionsVoteListener.GetInstance().getReward()
-					.getNode("cumulativevoting", String.valueOf(vote), "commands").getChildrenList().stream()
-					.map(ConfigurationNode::getString).collect(Collectors.toList());
+			Reward = AurionsVoteListener.GetInstance().getReward().getNode("cumulativevoting", String.valueOf(vote), "commands").getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList());
 
-			Broadcast = AurionsVoteListener.GetInstance().getReward()
-					.getNode("cumulativevoting", String.valueOf(vote), "broadcast").getString();
-			playermessage = AurionsVoteListener.GetInstance().getReward()
-					.getNode("cumulativevoting", String.valueOf(vote), "playermessage").getString();
+			Broadcast = AurionsVoteListener.GetInstance().getReward().getNode("cumulativevoting", String.valueOf(vote), "broadcast").getString();
+			playermessage = AurionsVoteListener.GetInstance().getReward().getNode("cumulativevoting", String.valueOf(vote), "playermessage").getString();
 
 			for (int x = 0; x < Reward.size(); x++) {
-				Sponge.getCommandManager().process(Sponge.getServer().getConsole(),
-						Reward.get(x).replace("<username>", player));
+				Sponge.getCommandManager().process(Sponge.getServer().getConsole(), Reward.get(x).replace("<username>", player));
 			}
-			
+
 			if (!Broadcast.isEmpty()) {
 				MessageChannel messageChannel = MessageChannel.TO_PLAYERS;
 				messageChannel.send(AurionsVoteListener.GetInstance().formatmessage(Broadcast, "", player));
@@ -282,8 +246,7 @@ public class RewardsTask {
 
 			if (!playermessage.isEmpty()) {
 				Optional<Player> target = Sponge.getServer().getPlayer(player);
-				target.get().sendMessage(
-						Text.of(AurionsVoteListener.GetInstance().formatmessage(playermessage, "", player)));
+				target.get().sendMessage(Text.of(AurionsVoteListener.GetInstance().formatmessage(playermessage, "", player)));
 			}
 		}
 	}

@@ -59,9 +59,7 @@ import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
 
-@Plugin(id = AurionsVoteListener.AURIONS_ID, name = "AurionsVoteListener", version = "1.3", authors = {
-		"THEJean_Kevin" }, description = "A votifier listener for Sponge", dependencies = {
-				@Dependency(id = "nuvotifier", optional = true) })
+@Plugin(id = AurionsVoteListener.AURIONS_ID, name = "AurionsVoteListener", version = "1.3", authors = { "THEJean_Kevin" }, description = "A votifier listener for Sponge", dependencies = { @Dependency(id = "nuvotifier", optional = true) })
 public class AurionsVoteListener {
 
 	public int version = 9;
@@ -157,8 +155,7 @@ public class AurionsVoteListener {
 
 		settingLoader = HoconConfigurationLoader.builder().setPath(Paths.get(defaultConfig + "/Setting.conf")).build();
 		rewardLoader = HoconConfigurationLoader.builder().setPath(Paths.get(defaultConfig + "/Reward.conf")).build();
-		adrewardLoader = HoconConfigurationLoader.builder().setPath(Paths.get(defaultConfig + "/AdvancedReward.conf"))
-				.build();
+		adrewardLoader = HoconConfigurationLoader.builder().setPath(Paths.get(defaultConfig + "/AdvancedReward.conf")).build();
 
 		getLogger().info("AurionsVoteListener Vote loading...");
 		getLogger().info("Trying To setup Config Loader");
@@ -168,9 +165,7 @@ public class AurionsVoteListener {
 		Asset AdRewardAsset = plugin.getAsset("AdvancedReward.conf").get();
 
 		// Directory
-		if (!Files.exists(Paths.get(defaultConfig + "/Setting.conf"))
-				&& !Files.exists(Paths.get(defaultConfig + "/Reward.conf"))
-				&& !Files.exists(Paths.get(defaultConfig + "/AdvancedReward.conf"))) {
+		if (!Files.exists(Paths.get(defaultConfig + "/Setting.conf")) && !Files.exists(Paths.get(defaultConfig + "/Reward.conf")) && !Files.exists(Paths.get(defaultConfig + "/AdvancedReward.conf"))) {
 			if (configAsset != null && RewardAsset != null && AdRewardAsset != null) {
 				if (Paths.get(defaultConfig + "/aurionsvotelistener.conf").toFile().exists()) {
 					newConfig = true;
@@ -184,66 +179,50 @@ public class AurionsVoteListener {
 
 					} catch (IOException e) {
 						e.printStackTrace();
-						getLogger().error(
-								"Could not unpack the default config from the jar! Maybe your Minecraft server doesn't have write permissions?");
+						getLogger().error("Could not unpack the default config from the jar! Maybe your Minecraft server doesn't have write permissions?");
 						return;
 					}
 				}
 			} else {
-				getLogger().error(
-						"Could not find the default config file in the jar! Did you open the jar and delete it?");
+				getLogger().error("Could not find the default config file in the jar! Did you open the jar and delete it?");
 				return;
 			}
 		}
 
 		reloadConfig();
 
-		CommandSpec fakeVoteCmd = CommandSpec.builder().permission("listener.admin")
-				.description(Text.of("send a fakevote"))
-				.arguments(GenericArguments.player(Text.of("player")),
-						GenericArguments.optional(GenericArguments.string(Text.of("service"))))
+		CommandSpec fakeVoteCmd = CommandSpec.builder().permission("listener.admin").description(Text.of("send a fakevote")).arguments(GenericArguments.player(Text.of("player")), GenericArguments.optional(GenericArguments.string(Text.of("service"))))
 				.executor(new FakeVoteCommand()).build();
 
-		CommandSpec clearqueueCmd = CommandSpec.builder().permission("listener.admin")
-				.description(Text.of("clear Queue's database")).executor(new ClearqueueCmd()).build();
+		CommandSpec clearqueueCmd = CommandSpec.builder().permission("listener.admin").description(Text.of("clear Queue's database")).executor(new ClearqueueCmd()).build();
 
-		CommandSpec cleartotalsCmd = CommandSpec.builder().permission("listener.admin")
-				.description(Text.of("clear total's database")).executor(new CleartotalsCmd()).build();
+		CommandSpec cleartotalsCmd = CommandSpec.builder().permission("listener.admin").description(Text.of("clear total's database")).executor(new CleartotalsCmd()).build();
 
-		CommandSpec setVoteCmd = CommandSpec.builder().permission("listener.admin")
-				.description(Text.of("set vote of player"))
-				.arguments(GenericArguments.string(Text.of("player")), GenericArguments.integer(Text.of("vote")))
-				.executor(new SetVoteCmd()).build();
-
-		CommandSpec reloadCmd = CommandSpec.builder().permission("listener.admin")
-				.description(Text.of("Reload your configs")).executor(new CommandExecutor() {
-
-					@Override
-					public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-						task.cancel();
-						reloadConfig();
-						src.sendMessage(Text.of("Reload success"));
-						return CommandResult.success();
-					}
-
-				}).build();
-
-		CommandSpec forcequeueCmd = CommandSpec.builder().permission("listener.admin")
-				.description(Text.of("Empty the database by executing the votes")).executor(new ForcequeueCmd())
+		CommandSpec setVoteCmd = CommandSpec.builder().permission("listener.admin").description(Text.of("set vote of player")).arguments(GenericArguments.string(Text.of("player")), GenericArguments.integer(Text.of("vote"))).executor(new SetVoteCmd())
 				.build();
 
-		CommandSpec VoteCmd = CommandSpec.builder().description(Text.of("Vote Command")).executor(new VoteCommand())
-				.build();
+		CommandSpec reloadCmd = CommandSpec.builder().permission("listener.admin").description(Text.of("Reload your configs")).executor(new CommandExecutor() {
 
-		CommandSpec votetopCmd = CommandSpec.builder().description(Text.of("Vote Top command"))
-				.executor(new VoteTopCmd()).build();
+			@Override
+			public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
+				task.cancel();
+				reloadConfig();
+				src.sendMessage(Text.of("Reload success"));
+				return CommandResult.success();
+			}
 
-		CommandSpec listenerCommandSpec = CommandSpec.builder().permission("listener.admin")
-				.description(Text.of("Plugin management"))
+		}).build();
+
+		CommandSpec forcequeueCmd = CommandSpec.builder().permission("listener.admin").description(Text.of("Empty the database by executing the votes")).executor(new ForcequeueCmd()).build();
+
+		CommandSpec VoteCmd = CommandSpec.builder().description(Text.of("Vote Command")).executor(new VoteCommand()).build();
+
+		CommandSpec votetopCmd = CommandSpec.builder().description(Text.of("Vote Top command")).executor(new VoteTopCmd()).build();
+
+		CommandSpec listenerCommandSpec = CommandSpec.builder().permission("listener.admin").description(Text.of("Plugin management"))
 				// .child(VoteCmd, "vote")
 				// .child(votetopCmd,"votetop")
-				.child(cleartotalsCmd, "cleartotals").child(fakeVoteCmd, "fakevote").child(clearqueueCmd, "clearqueue")
-				.child(forcequeueCmd, "forcequeue").child(reloadCmd, "reload").child(setVoteCmd, "set").build();
+				.child(cleartotalsCmd, "cleartotals").child(fakeVoteCmd, "fakevote").child(clearqueueCmd, "clearqueue").child(forcequeueCmd, "forcequeue").child(reloadCmd, "reload").child(setVoteCmd, "set").build();
 
 		Sponge.getCommandManager().register(this, listenerCommandSpec, "aurions");
 		Sponge.getCommandManager().register(this, VoteCmd, "vote");
@@ -279,44 +258,36 @@ public class AurionsVoteListener {
 		AurionsVoteListener.cumulativevoting = Node.getNode("settings", "cumulativevoting").getBoolean();
 
 		// Message
-		AurionsVoteListener.voteMessage = Node.getNode("votemessage").getChildrenList().stream()
-				.map(ConfigurationNode::getString).collect(Collectors.toList());
-		AurionsVoteListener.messagejoin = Node.getNode("joinmessage").getChildrenList().stream()
-				.map(ConfigurationNode::getString).collect(Collectors.toList());
-		AurionsVoteListener.annoucement = Node.getNode("Announcement").getChildrenList().stream()
-				.map(ConfigurationNode::getString).collect(Collectors.toList());
+		AurionsVoteListener.voteMessage = Node.getNode("votemessage").getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList());
+		AurionsVoteListener.messagejoin = Node.getNode("joinmessage").getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList());
+		AurionsVoteListener.annoucement = Node.getNode("Announcement").getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList());
 		AurionsVoteListener.offlineBroadcast = Node.getNode("Offline", "broadcast").getString();
 		AurionsVoteListener.offlinePlayerMessage = Node.getNode("Offline", "playermessage").getString();
 		// topvote
 		AurionsVoteListener.votetopformat = Node.getNode("votetopformat").getString();
-		AurionsVoteListener.votetopheader = Node.getNode("votetopheader").getChildrenList().stream()
-				.map(ConfigurationNode::getString).collect(Collectors.toList());
+		AurionsVoteListener.votetopheader = Node.getNode("votetopheader").getChildrenList().stream().map(ConfigurationNode::getString).collect(Collectors.toList());
 
 	}
 
 	public static void GetAdvancedReward(ConfigurationNode Node) {
 
-		for (Entry<Object, ? extends ConfigurationNode> markers : Node.getNode("ExtraReward").getChildrenMap()
-				.entrySet()) {
+		for (Entry<Object, ? extends ConfigurationNode> markers : Node.getNode("ExtraReward").getChildrenMap().entrySet()) {
 			String key = (String) markers.getKey();
 			AurionsVoteListener.extrarandom.add(100 - Integer.parseInt(key));
 		}
 		Collections.sort(AurionsVoteListener.extrarandom);
 
-		for (Entry<Object, ? extends ConfigurationNode> markers : Node.getNode("cumulativevoting").getChildrenMap()
-				.entrySet()) {
+		for (Entry<Object, ? extends ConfigurationNode> markers : Node.getNode("cumulativevoting").getChildrenMap().entrySet()) {
 			String key = (String) markers.getKey();
 			AurionsVoteListener.cumulativreward.add(Integer.parseInt(key));
 		}
 		Collections.sort(AurionsVoteListener.cumulativreward);
 
-		for (Entry<Object, ? extends ConfigurationNode> markers : Node.getNode("perms").getChildrenMap()
-				.entrySet()) {
+		for (Entry<Object, ? extends ConfigurationNode> markers : Node.getNode("perms").getChildrenMap().entrySet()) {
 			String key = (String) markers.getKey();
 			AurionsVoteListener.permission.add(key);
 		}
-		
-		
+
 	}
 
 	public void reloadConfig() {
@@ -343,21 +314,16 @@ public class AurionsVoteListener {
 		GetSetting(settingNode);
 		GetAdvancedReward(adrewardNode);
 
-		if ((SQLType == "MySQL") && (dbHost.isEmpty() || dbHost == null || dbUser.isEmpty() || dbUser == null
-				|| dbPass.isEmpty() || dbPass == null)) {
+		if ((SQLType == "MySQL") && (dbHost.isEmpty() || dbHost == null || dbUser.isEmpty() || dbUser == null || dbPass.isEmpty() || dbPass == null)) {
 			getLogger().warn("Please config database");
-			Sponge.getGame().getServer().getConsole().sendMessage(
-					TextSerializers.formattingCode('§').deserialize("[AurionsVoteListener] §c----------------------"));
-			Sponge.getGame().getServer().getConsole().sendMessage(
-					TextSerializers.formattingCode('§').deserialize("[AurionsVoteListener] §cPlease config database"));
-			Sponge.getGame().getServer().getConsole().sendMessage(
-					TextSerializers.formattingCode('§').deserialize("[AurionsVoteListener] §c----------------------"));
+			Sponge.getGame().getServer().getConsole().sendMessage(TextSerializers.formattingCode('§').deserialize("[AurionsVoteListener] §c----------------------"));
+			Sponge.getGame().getServer().getConsole().sendMessage(TextSerializers.formattingCode('§').deserialize("[AurionsVoteListener] §cPlease config database"));
+			Sponge.getGame().getServer().getConsole().sendMessage(TextSerializers.formattingCode('§').deserialize("[AurionsVoteListener] §c----------------------"));
 		} else {
 			try {
 				if ((SwitchSQL.connection != null) && (!SwitchSQL.connection.isClosed())) {
 					SwitchSQL.Close();
-					SwitchSQL.open(AurionsVoteListener.dbHost, AurionsVoteListener.dbPort, AurionsVoteListener.dbUser,
-							AurionsVoteListener.dbPass, AurionsVoteListener.dbName, AurionsVoteListener.dbPrefix);
+					SwitchSQL.open(AurionsVoteListener.dbHost, AurionsVoteListener.dbPort, AurionsVoteListener.dbUser, AurionsVoteListener.dbPass, AurionsVoteListener.dbName, AurionsVoteListener.dbPrefix);
 				} else {
 					SwitchSQL.open(dbHost, dbPort, dbUser, dbPass, dbName, dbPrefix);
 				}
@@ -402,19 +368,11 @@ public class AurionsVoteListener {
 		if (message.indexOf("/") == 0) {
 			message = message.substring(1);
 		}
-		message = message.replace("<servicename>", serviceName).replace("<service>", serviceName)
-				.replace("<SERVICE>", serviceName).replace("<name>", playerName).replace("(name)", playerName)
-				.replace("<player>", playerName).replace("(player)", playerName).replace("<username>", playerName)
-				.replace("(username)", playerName).replace("<name>", playerName).replace("<player>", playerName)
-				.replace("<username>", playerName).replace("[name]", playerName).replace("[player]", playerName)
-				.replace("[username]", playerName).replace("<AQUA>", "§b").replace("<BLACK>", "§0")
-				.replace("<BLUE>", "§9").replace("<DARK_AQUA>", "§3").replace("<DARK_BLUE>", "§1")
-				.replace("<DARK_GRAY>", "§8").replace("<DARK_GREEN>", "§2").replace("<DARK_PURPLE>", "§5")
-				.replace("<DARK_RED>", "§4").replace("<GOLD>", "§6").replace("<GRAY>", "§7").replace("<GREEN>", "§a")
-				.replace("<LIGHT_PURPLE>", "§d").replace("<RED>", "§c").replace("<WHITE>", "§f")
-				.replace("<YELLOW>", "§e").replace("<BOLD>", "§l").replace("<ITALIC>", "§o").replace("<MAGIC>", "§k")
-				.replace("<RESET>", "§r").replace("<STRIKE>", "§m").replace("<STRIKETHROUGH>", "§m")
-				.replace("<UNDERLINE>", "§n").replace("<votes>", String.valueOf(votes));
+		message = message.replace("<servicename>", serviceName).replace("<service>", serviceName).replace("<SERVICE>", serviceName).replace("<name>", playerName).replace("(name)", playerName).replace("<player>", playerName).replace("(player)", playerName)
+				.replace("<username>", playerName).replace("(username)", playerName).replace("<name>", playerName).replace("<player>", playerName).replace("<username>", playerName).replace("[name]", playerName).replace("[player]", playerName)
+				.replace("[username]", playerName).replace("<AQUA>", "§b").replace("<BLACK>", "§0").replace("<BLUE>", "§9").replace("<DARK_AQUA>", "§3").replace("<DARK_BLUE>", "§1").replace("<DARK_GRAY>", "§8").replace("<DARK_GREEN>", "§2")
+				.replace("<DARK_PURPLE>", "§5").replace("<DARK_RED>", "§4").replace("<GOLD>", "§6").replace("<GRAY>", "§7").replace("<GREEN>", "§a").replace("<LIGHT_PURPLE>", "§d").replace("<RED>", "§c").replace("<WHITE>", "§f").replace("<YELLOW>", "§e")
+				.replace("<BOLD>", "§l").replace("<ITALIC>", "§o").replace("<MAGIC>", "§k").replace("<RESET>", "§r").replace("<STRIKE>", "§m").replace("<STRIKETHROUGH>", "§m").replace("<UNDERLINE>", "§n").replace("<votes>", String.valueOf(votes));
 
 		if (message.toLowerCase().contains("http")) {
 			String url = "";
@@ -425,8 +383,7 @@ public class AurionsVoteListener {
 			}
 			Text text = null;
 			try {
-				text = TextSerializers.formattingCode('§').deserialize(message).toBuilder()
-						.onClick(TextActions.openUrl(new URL(url))).build();
+				text = TextSerializers.formattingCode('§').deserialize(message).toBuilder().onClick(TextActions.openUrl(new URL(url))).build();
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 				return Text.of("Url False, contact admin");
@@ -460,8 +417,7 @@ public class AurionsVoteListener {
 			if (target.isPresent()) {
 				RewardsTask.online(player, vote.getServiceName());
 			} else {
-				Sponge.getServer().getConsole()
-						.sendMessage(Text.of("The player is not connected, it's impossible to give reward"));
+				Sponge.getServer().getConsole().sendMessage(Text.of("The player is not connected, it's impossible to give reward"));
 			}
 		}
 	}
@@ -470,11 +426,9 @@ public class AurionsVoteListener {
 	public void onPlayerJoin(ClientConnectionEvent.Join event) {
 		Player player = (Player) event.getTargetEntity();
 		String username = player.getName();
-		if ((AurionsVoteListener.SQLType == "MySQL") && (dbHost.isEmpty() || dbHost == null || dbUser.isEmpty()
-				|| dbUser == null || dbPass.isEmpty() || dbPass == null)) {
+		if ((AurionsVoteListener.SQLType == "MySQL") && (dbHost.isEmpty() || dbHost == null || dbUser.isEmpty() || dbUser == null || dbPass.isEmpty() || dbPass == null)) {
 			if (player.hasPermission("*") || player.hasPermission("listener.top")) {
-				player.sendMessage(
-						Text.builder("<AurionsVoteListener> Please config Database.").color(TextColors.RED).build());
+				player.sendMessage(Text.builder("<AurionsVoteListener> Please config Database.").color(TextColors.RED).build());
 			}
 		} else {
 			if (SwitchSQL.QueueUsername(username)) {
@@ -487,10 +441,8 @@ public class AurionsVoteListener {
 				}
 				MessageChannel messageChannel = MessageChannel.TO_PLAYERS;
 
-				messageChannel.send(AurionsVoteListener.GetInstance()
-						.formatmessage(offlineBroadcast.replace("<amt>", String.valueOf(totalVote)), "", username));
-				player.sendMessage(Text.of(AurionsVoteListener.GetInstance().formatmessage(
-						offlinePlayerMessage.replace("<amt>", String.valueOf(totalVote)), "", username)));
+				messageChannel.send(AurionsVoteListener.GetInstance().formatmessage(offlineBroadcast.replace("<amt>", String.valueOf(totalVote)), "", username));
+				player.sendMessage(Text.of(AurionsVoteListener.GetInstance().formatmessage(offlinePlayerMessage.replace("<amt>", String.valueOf(totalVote)), "", username)));
 			} else {
 			}
 			if (joinmessage) {

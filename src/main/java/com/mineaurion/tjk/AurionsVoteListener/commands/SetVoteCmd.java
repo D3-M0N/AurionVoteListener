@@ -13,22 +13,21 @@ public class SetVoteCmd implements CommandExecutor {
 
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-		if ((src.hasPermission("*")) || (src.hasPermission("listener.admin")))
-		{
+		if ((src.hasPermission("*")) || (src.hasPermission("listener.admin"))) {
 			String player = args.<String>getOne("player").get();
-			int vote = args.<Integer>getOne("vote").get();	
+			int vote = args.<Integer>getOne("vote").get();
 			long CurrentMiliseconde = System.currentTimeMillis();
 			boolean succes = SwitchSQL.Voted(player, vote, CurrentMiliseconde);
-			if(succes){
-				src.sendMessage(Text.of("Vote set for "+player+" : "+String.valueOf(vote)));
+			if (succes) {
+				src.sendMessage(Text.of("Vote set for " + player + " : " + String.valueOf(vote)));
 				return CommandResult.success();
-			}else{
+			} else {
 				src.sendMessage(Text.of("an error has occurred"));
 				return CommandResult.success();
 			}
-		}else{
+		} else {
 			src.sendMessage(Text.of("You don't have permission"));
-		return CommandResult.empty();
+			return CommandResult.empty();
 		}
 	}
 

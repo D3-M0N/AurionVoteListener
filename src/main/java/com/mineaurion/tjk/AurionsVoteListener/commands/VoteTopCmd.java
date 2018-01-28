@@ -10,16 +10,16 @@ import com.mineaurion.tjk.AurionsVoteListener.AurionsVoteListener;
 import com.mineaurion.tjk.AurionsVoteListener.SwitchSQL;
 
 public class VoteTopCmd implements CommandExecutor {
-	
+
 	@SuppressWarnings("static-access")
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
 		AurionsVoteListener plugin = new AurionsVoteListener();
-		
-			for(int i = 0; i<plugin.votetopheader.size();i++){
-				src.sendMessage(plugin.formatmessage(plugin.votetopheader.get(i),"",src.getName()));
-			}
-			SwitchSQL.VoteTop(src);
-			return CommandResult.success();
+
+		for (int i = 0; i < plugin.votetopheader.size(); i++) {
+			src.sendMessage(plugin.formatmessage(plugin.votetopheader.get(i), "", src.getName()));
 		}
+		SwitchSQL.VoteTop(src);
+		return CommandResult.success();
+	}
 }

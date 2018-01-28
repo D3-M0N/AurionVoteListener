@@ -13,20 +13,18 @@ public class ClearqueueCmd implements CommandExecutor {
 
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-		if (src.hasPermission("*") || src.hasPermission("listener.admin"))
-		{
-		Boolean clear = SwitchSQL.Clearqueue();
-		if(clear){
-			src.sendMessage(Text.of("Cleared successful"));
-			return CommandResult.success();
-		}
-		else{
-			src.sendMessage(Text.of("Cleared fail"));
-			return CommandResult.empty();
-		}
-		}else{
+		if (src.hasPermission("*") || src.hasPermission("listener.admin")) {
+			Boolean clear = SwitchSQL.Clearqueue();
+			if (clear) {
+				src.sendMessage(Text.of("Cleared successful"));
+				return CommandResult.success();
+			} else {
+				src.sendMessage(Text.of("Cleared fail"));
+				return CommandResult.empty();
+			}
+		} else {
 			src.sendMessage(Text.of("You don't have permission"));
-		return CommandResult.empty();
+			return CommandResult.empty();
 		}
 	}
 
