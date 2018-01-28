@@ -13,7 +13,7 @@ public class ClearqueueCmd implements CommandExecutor {
 
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-		if (src.hasPermission("*") || src.hasPermission("listener.admin")) {
+		if (src.hasPermission("*") || src.hasPermission("listener.admin.clearqueue")) {
 			Boolean clear = SwitchSQL.Clearqueue();
 			if (clear) {
 				src.sendMessage(Text.of("Cleared successful"));

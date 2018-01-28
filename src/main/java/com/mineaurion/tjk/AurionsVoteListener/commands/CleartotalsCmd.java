@@ -13,7 +13,7 @@ public class CleartotalsCmd implements CommandExecutor {
 
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-		if (src.hasPermission("*") || src.hasPermission("listener.admin")) {
+		if (src.hasPermission("*") || src.hasPermission("listener.admin.cleartotals")) {
 			Boolean clear = SwitchSQL.Cleartotals();
 			if (clear) {
 				src.sendMessage(Text.of("Cleared successful"));

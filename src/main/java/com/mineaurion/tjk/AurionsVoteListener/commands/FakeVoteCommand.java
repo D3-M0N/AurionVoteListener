@@ -19,7 +19,7 @@ public class FakeVoteCommand implements CommandExecutor {
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
 
-		if ((src.hasPermission("*")) || (src.hasPermission("listener.admin"))) {
+		if ((src.hasPermission("*")) || (src.hasPermission("listener.admin.fakevote"))) {
 			Player player = args.<Player>getOne("player").get();
 			String service = args.<String>getOne("service").orElse("");
 

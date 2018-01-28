@@ -15,7 +15,7 @@ public class ForcequeueCmd implements CommandExecutor {
 
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-		if (src.hasPermission("*") || src.hasPermission("listener.admin")) {
+		if (src.hasPermission("*") || src.hasPermission("listener.admin.forcequeue")) {
 			List<String> player = SwitchSQL.QueuePlayer();
 
 			for (int i = 0; i < player.size(); i++) {

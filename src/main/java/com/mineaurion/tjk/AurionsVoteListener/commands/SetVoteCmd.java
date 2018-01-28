@@ -13,7 +13,7 @@ public class SetVoteCmd implements CommandExecutor {
 
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-		if ((src.hasPermission("*")) || (src.hasPermission("listener.admin"))) {
+		if ((src.hasPermission("*")) || (src.hasPermission("listener.admin.set"))) {
 			String player = args.<String>getOne("player").get();
 			int vote = args.<Integer>getOne("vote").get();
 			long CurrentMiliseconde = System.currentTimeMillis();
